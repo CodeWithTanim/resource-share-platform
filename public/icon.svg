@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="50%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#1E3A8A" />
+    </linearGradient>
+    <linearGradient id="topLayer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    <linearGradient id="midLayer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#93C5FD" />
+      <stop offset="100%" stop-color="#60A5FA" />
+    </linearGradient>
+    <linearGradient id="botLayer" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#3B82F6" />
+    </linearGradient>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="128" height="128" rx="28" fill="url(#bgGrad)" />
+
+  <!-- Subtle inner border -->
+  <rect x="2" y="2" width="124" height="124" rx="26" stroke="#FFFFFF" stroke-opacity="0.15" stroke-width="2" fill="none" />
+
+  <!-- Central Layered Shapes (ResourceHub Layers Logo) -->
+  <g filter="url(#dropShadow)">
+    <!-- Top Layer Diamond -->
+    <path d="M64 26 L96 42 L64 58 L32 42 Z" fill="url(#topLayer)" />
+
+    <!-- Middle Layer -->
+    <path d="M32 54 L64 70 L96 54 L96 62 L64 78 L32 62 Z" fill="url(#midLayer)" opacity="0.95" />
+
+    <!-- Bottom Layer -->
+    <path d="M32 74 L64 90 L96 74 L96 82 L64 98 L32 82 Z" fill="url(#botLayer)" />
+  </g>
+
+  <!-- Center Sparkle / Shared Node Accent -->
+  <circle cx="64" cy="42" r="3.5" fill="#2563EB" />
+</svg>
+

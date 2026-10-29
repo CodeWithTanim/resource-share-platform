@@ -1,61 +1,65 @@
-# ResourceHub — Frontend & Student Experience Module
-> **Team Member:** MD AMIT HASAN ROBI  
-> **GitHub:** [https://github.com/amit-hasan10](https://github.com/amit-hasan10)  
-> **Role:** User 1 — Frontend & Student Experience Specialist  
+# ResourceHub — Backend, Database & Authentication Module
+> **Team Member:** ATIKUR RAHMAN  
+> **GitHub:** [https://github.com/atikurrahmanxm](https://github.com/atikurrahmanxm)  
+> **Role:** User 2 — Backend, Database & Authentication Architect  
 > **Project:** ResourceHub — Unlock Underused Equipment and Spaces  
 
 ---
 
 ## 🎯 Member Overview & Contribution Summary
 
-As **User 1 (Frontend & Student Experience)**, my primary focus was designing, implementing, and polishing the entire client-facing experience of ResourceHub to deliver a clean, intuitive, and highly responsive web application. 
+As **User 2 (Backend, Database & Authentication)**, my primary responsibility was engineering the core data architecture, API communication layer, secure user authentication system, server middleware, and anti-abuse mechanisms.
 
-I ensured that students, researchers, and campus visitors can effortlessly discover equipment, verify safety rules, manage bookings, and navigate the platform across both desktop and mobile devices.
+I ensured that every data transaction across students, faculty, and administrators is strictly validated, encrypted, and persisted reliably in MongoDB Atlas.
 
 ---
 
 ## 🛠️ Key Responsibilities & Features Built
 
-### 1. Modern Institutional Homepage & Hero Section (`src/app/page.tsx`)
-- Engineered the responsive Hero banner with clean typography, dynamic search bar, category chips, and floating badge visuals.
-- Designed and integrated the **Live Campus Trust Counters** (20,000+ Researchers, 140+ Labs & Gear, 99.4% Uptime, \$2.4M Saved).
-- Embedded the **Why Choose Us** value proposition showcase displaying institutional trust pillars.
-- Featured listing carousel highlighting prioritized available university resources.
+### 1. MongoDB Atlas Architecture & Data Modeling (`src/lib/mongodb.ts`)
+- Configured connection pooling and MongoDB client lifecycle management for Next.js App Router server environments.
+- Defined relational schemas and document models across 8 primary collections:
+  - `users`: User profiles, bcrypt password hashes, role privileges (`student`, `teacher`, `admin`), departmental affiliations, and certified safety qualifications.
+  - `resources`: Technical inventory, category tags, hourly booking constraints, owner IDs, deposit requirements, and live status.
+  - `bookings`: Complete state machine documents containing slot times, requester IDs, approval notes, and check-in/out inspection logs.
+  - `incidents`: Incident desk reports with photo URLs, severity levels, and mediation outcomes.
+  - `audit_logs`: Tamper-evident ledger logging system events, actors, and targets.
+  - `contact_messages`: Public inquiries with IP addresses and resolution statuses.
+  - `why_choose_us_items` & `social_links`: Dynamic content schemas.
 
-### 2. Comprehensive Resource Catalog & Filter Engine (`src/app/resources/page.tsx`)
-- Built instant multi-category filtering (All, Labs, Computers, Cameras, Equipment, Rooms).
-- Integrated search bar for real-time querying by equipment title, department, or campus bay location.
-- Added sorting options by featured status, availability, and rental duration.
-- Created interactive `ResourceCard` component (`src/components/ResourceCard.tsx`) showing status badges, safety badges, hourly limits, and location tags.
+### 2. Authentication & JWT Session Engine (`src/lib/auth.ts`, `src/app/api/auth/*`)
+- Implemented secure password hashing and verification using `bcryptjs`.
+- Created signed, HTTP-only session cookies (`resourcehub_session`) storing user ID, role, and verification status.
+- Built authentication endpoints:
+  - `POST /api/auth/register` — Validates institutional email, role selection, and creates user profile.
+  - `POST /api/auth/login` — Verifies credentials and issues session token.
+  - `POST /api/auth/logout` — Revokes session cookie and clears client state.
+  - `GET /api/auth/me` — Returns current authenticated user details.
+  - `POST /api/auth/demo-login` — Provides instant 1-click JWT authorization for hackathon judges.
 
-### 3. Dedicated Student Experience Portal (`src/app/student/page.tsx`)
-- Designed the Student Reservation Command Center with organized tab views:
-  - **Active & In-Use:** Instant access to active reservations, check-in status, and return countdowns.
-  - **Pending & Waitlisted:** Real-time visibility into queue rankings and waiting approvals.
-  - **Booking History:** Past completed, returned, and rejected bookings with audit records.
-- Built interactive condition inspection modal allowing students to submit before-use condition notes and handover inspection reports.
-- Implemented 1-click booking extension request mechanism.
+### 3. Server-Side Security Middleware (`src/middleware.ts`)
+- Engineered Next.js Edge Middleware to enforce route-level Role-Based Access Control (RBAC):
+  - Protected paths: `/admin/*`, `/teacher/*`, `/student/*`, `/resource-details/*`.
+  - Unauthenticated visitors are automatically redirected to `/auth/login` with preserved destination query (`?redirect=...`).
+  - Strict role segregation prevents students from entering `/admin` or `/teacher` routes.
 
-### 4. Navigation & Institutional Knowledge Pages
-- **Navbar (`src/components/Navbar.tsx`):** Dynamic role-aware navigation bar, notification bell dropdown with real-time unread badges, and user avatar menu.
-- **Institutional Pages:**
-  - `src/app/help/page.tsx` — Knowledge Base & FAQ Center
-  - `src/app/trust-and-safety/page.tsx` — Safety verification and qualification guidelines
-  - `src/app/about/page.tsx` — Mission, vision, and campus sharing impact
-  - `src/app/how-it-works/page.tsx` — 4-step workflow breakdown for students and faculty
-  - `src/app/terms/page.tsx` & `src/app/privacy/page.tsx` — Institutional terms of use and data governance
+### 4. IP-Based Rate Limiting System (`src/app/api/contact/route.ts`)
+- Designed and implemented a sliding-window rate limiter for the public Contact Form:
+  - Enforces a maximum of **2 messages per 5 minutes per IP**.
+  - Rejects 3rd message with **HTTP 429 (Too Many Requests)**, dynamic cooldown countdown, and standard `Retry-After` headers.
+  - Persists and tracks submission IP addresses directly in the database.
 
 ---
 
 ## 📁 Primary Files Authored / Maintained
 
-- `src/app/page.tsx` (Homepage & Hero)
-- `src/app/resources/page.tsx` (Catalog & Filtering)
-- `src/app/student/page.tsx` (Student Portal & Condition Inspections)
-- `src/components/ResourceCard.tsx` (Equipment Card UI)
-- `src/components/Navbar.tsx` (Navigation & Notification Dropdown)
-- `src/components/WhyChooseUs.tsx` (Trust & Benefits Section)
-- `src/app/help/page.tsx`, `src/app/about/page.tsx`, `src/app/how-it-works/page.tsx`, `src/app/trust-and-safety/page.tsx`
+- `src/lib/mongodb.ts` (Database Connection & Atlas Client)
+- `src/lib/auth.ts` (Password Hashing, JWT Signing, Token Verification)
+- `src/middleware.ts` (Next.js Edge Route Guard & Access Control)
+- `src/app/api/auth/login/route.ts` & `src/app/api/auth/register/route.ts`
+- `src/app/api/auth/demo-login/route.ts` & `src/app/api/auth/me/route.ts`
+- `src/app/api/contact/route.ts` (Contact API & IP Rate Limiter)
+- `src/lib/seed.ts` (Comprehensive 15-Resource Seed Engine)
 
 ---
 
@@ -65,12 +69,12 @@ I ensured that students, researchers, and campus visitors can effortlessly disco
 # 1. Install dependencies
 npm install
 
-# 2. Start development server
-npm run dev
+# 2. Configure .env file
+MONGODB_URI=mongodb+srv://...
+JWT_SECRET=super-secure-jwt-secret-key-hackathon-2026
 
-# 3. Or build for production
-npm run build
-npm run start
+# 3. Start server
+npm run dev
 ```
 Navigate to [http://localhost:3000](http://localhost:3000).
 
