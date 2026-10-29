@@ -1,61 +1,61 @@
-# ResourceHub — Booking Workflow, Safety & Fair Allocation Module
-> **Team Member:** MD SAMIUR RAHMAN TANIM  
-> **GitHub:** [https://github.com/CodeWithTanim](https://github.com/CodeWithTanim)  
-> **Role:** User 3 — Booking Workflow, Safety & Fair Allocation Engineer  
+# ResourceHub — Manager/Admin Dashboard, Integration & QA Module
+> **Team Member:** MAHIDUL AHASAN  
+> **GitHub:** [https://github.com/ProgrammingWithMahidul](https://github.com/ProgrammingWithMahidul)  
+> **Role:** User 4 — Manager/Admin Dashboard, Integration & QA Lead  
 > **Project:** ResourceHub — Unlock Underused Equipment and Spaces  
 
 ---
 
 ## 🎯 Member Overview & Contribution Summary
 
-As **User 3 (Booking Workflow, Safety & Fair Allocation)**, my core mandate was engineering the complex lifecycle state machine, scheduling conflict detection, safety prerequisite validations, transparent waitlist queuing, and chain-of-custody verification.
+As **User 4 (Manager/Admin Dashboard, Integration & QA)**, my primary responsibility was architecting the Faculty Management Portal, the comprehensive Administrator Governance Console, the Dynamic Content Management Systems (CMS), Incident Escalation & Dispute Mediation, and leading end-to-end quality assurance across all modules.
 
-I ensured that shared university equipment is never double-booked, safety certifications are strictly enforced, and monopolization by individual users is mathematically prevented.
+I ensured that administrators have complete visibility into campus inventory, disputes are handled transparently with photo evidence, and the system performs flawlessly under rigorous testing.
 
 ---
 
 ## 🛠️ Key Responsibilities & Features Built
 
-### 1. Booking State Machine & Lifecycle Engine (`src/app/api/bookings/*`)
-- Engineered the complete deterministic state transitions:
-  `pending` ➔ `approved` ➔ `in_use` ➔ `completed` (or `rejected`, `waitlisted`, `cancelled`).
-- Implemented time overlap algorithms that calculate start and end bounds to guarantee no two active reservations collide for the same resource bay.
-- Designed booking action handlers:
-  - Student initial reservation creation with date, time, and intended educational purpose.
-  - Faculty approval with pickup instructions or rejection with transparent explanatory reason.
-  - Student check-in upon equipment pickup.
-  - Student return handover and final checkout.
+### 1. Faculty / Teacher Resource Management Portal (`src/app/teacher/page.tsx`)
+- Built the faculty command dashboard allowing lab coordinators and educators to:
+  - Add new institutional listings (title, category, hourly caps, deposit requirements, required training certificates).
+  - Review student booking requests with 1-click **Approve**, **Reject with Reason**, or **Waitlist**.
+  - Compare check-in inspection photos against return handover photos to confirm equipment integrity.
+  - Toggle maintenance status on equipment bays with a single switch.
 
-### 2. Safety Qualifications & Prerequisite Enforcement
-- Built prerequisite verification checks that validate whether a student possesses required safety certificates before allowing a booking:
-  - Examples: *Laser Cutter Certification*, *Cleanroom Protocol*, *High-Speed Camera Handling*.
-  - Displays missing qualification notices and prevents uncertified students from risking expensive equipment.
+### 2. Comprehensive Administrator Governance Console (`src/app/admin/page.tsx`)
+- Engineered a multi-tab administrative command center featuring:
+  - **Platform Overview:** Real-time metrics tracking Total Users, Verified Faculty, Inventory, Active Bookings, and Open Disputes.
+  - **User & Faculty Verification Desk:** Verify educator identity and grant official listing privileges.
+  - **Incident Desk:** Review damage, delay, and misconduct reports with photo evidence URLs, and apply administrative resolutions.
+  - **Immutable Audit Explorer:** Searchable, role-filterable ledger recording all sensitive platform activities with actor names, actions, targets, and timestamps.
+  - **Contact Inquiries Console:** Search and filter public inquiries submitted from the Contact portal, review sender IP addresses, update status (`New`, `In Review`, `Resolved`), reply via email, or delete messages.
+  - **Dynamic Why Choose Us CMS:** Live editor to add, update, reorder, or reset value proposition cards on the homepage.
+  - **Dynamic Footer Socials CMS:** Real-time control to customize social platform profiles, URLs, and visibility in the footer.
 
-### 3. Fair Allocation & Anti-Monopolization Controls
-- Implemented hard caps to prevent equipment hoarding during peak academic periods:
-  - Max active bookings: Enforces a strict maximum of **4 concurrent active reservations per student**.
-  - Maximum duration enforcement based on resource category (e.g. max 4 hours for high-demand AI servers, 72 hours for fieldwork cameras).
+### 3. Incident Desk & Dispute Mediation (`src/app/api/incidents/*`)
+- Built incident reporting APIs allowing both students and faculty to escalate equipment malfunctions, physical damage, or scheduling delays.
+- Provides structured fields for evidence URLs, severity ranking, accused parties, and resolution logs.
 
-### 4. Transparent Waitlist & Queue Auto-Promotion Engine
-- When a requested slot has an existing reservation, students can opt to join the waitlist.
-- Provides real-time queue position indicators (e.g. *"#1 in Waitlist Queue"*).
-- When an active booking completes or is cancelled, the next eligible waitlisted candidate is automatically evaluated and promoted.
-
-### 5. Physical Chain-of-Custody Condition Verification
-- Created mandatory two-stage inspection reporting:
-  - **Before-Use Check-In:** Requester records pre-existing scratches, lens condition, and uploads inspection photo proof.
-  - **After-Use Check-Out:** Requester submits sanitization and post-use operational status with return photos.
-  - Eliminates post-return liability disputes between faculty owners and student researchers.
+### 4. Integration, Automated Testing & Quality Assurance
+- Authored automated end-to-end test suites (`scratch/test_suite.mjs`) covering:
+  - 100% of public frontend pages (`/`, `/resources`, `/about`, `/help`, etc.).
+  - Protected route access and Next.js Edge Middleware redirect validation.
+  - JWT demo login persona verification for Student, Teacher, and Admin accounts.
+  - Public and protected REST API endpoint contracts.
+- Ensured zero TypeScript errors and zero ESLint warnings across the entire repository during production builds (`npm run build`).
 
 ---
 
 ## 📁 Primary Files Authored / Maintained
 
-- `src/app/api/bookings/route.ts` (Booking Creation, Conflict Checks, Active Caps)
-- `src/app/api/bookings/[id]/route.ts` (Status Transitions: Approve, Reject, Check-in, Return, Extend)
-- `src/app/resource-details/page.tsx` (Booking Request Modal & Safety Prerequisite Checker)
-- `src/components/StatusBadge.tsx` (Dynamic Status Badge System)
-- `src/lib/audit.ts` (Booking Event Logger)
+- `src/app/admin/page.tsx` (Administrator Governance Console & CMS Editors)
+- `src/app/teacher/page.tsx` (Faculty Portal & Listing Management)
+- `src/app/api/admin/stats/route.ts` & `src/app/api/admin/users/route.ts`
+- `src/app/api/admin/audit-logs/route.ts` (Audit Trail API)
+- `src/app/api/incidents/route.ts` & `src/app/api/incidents/[id]/route.ts`
+- `src/app/api/why-choose-us/route.ts` & `src/app/api/social-links/route.ts`
+- `scratch/test_suite.mjs` (Automated E2E Verification Engine)
 
 ---
 
@@ -65,11 +65,13 @@ I ensured that shared university equipment is never double-booked, safety certif
 # 1. Install dependencies
 npm install
 
-# 2. Run Next.js server
-npm run dev
+# 2. Build and start production server
+npm run build
+npm run start
 
-# 3. Test booking workflow
-# Visit /resources -> select any item -> submit reservation request
+# 3. Access Admin Console
+# Navigate to http://localhost:3000/auth/login
+# Click 'Admin' under 'TEST PRODUCTION LOGIN' or visit /admin
 ```
 Navigate to [http://localhost:3000](http://localhost:3000).
 
